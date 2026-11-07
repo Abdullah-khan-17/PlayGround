@@ -40,6 +40,117 @@ function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearT
 function randomize(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function allCategories(){return BASE_CATEGORIES}
 function wordsFor(category){return(WORDS[category]||'').split(',').map(word=>word.trim()).filter(Boolean)}
+const HINT_RULES={
+ Animals:{groups:[
+  {words:'dolphin|octopus|jellyfish|walrus|piranha|seahorse|otter|platypus',hints:['It spends much of its life in or near water.','Look to rivers, lakes, or the sea for its home.']},
+  {words:'penguin|flamingo|peacock|hummingbird|parrot',hints:['Its feathers make it hard to miss.','This creature is known for its striking plumage.']},
+  {words:'tortoise|chameleon|crocodile|mantis',hints:['A patient observer might spot it blending into its surroundings.','It is well suited to a warm, sunny habitat.']},
+  {words:'elephant|giraffe|kangaroo|cheetah|koala|porcupine|meerkat|llama|badger|leopard|raccoon|squirrel|hedgehog',hints:['Its distinctive body or behavior makes it easy to recognize.','It has a memorable way of moving through its habitat.']}
+ ],fallback:['Think about a creature and the habitat it calls home.','Its natural behavior is a useful clue.']},
+ Food:{groups:[
+  {words:'avocado|watermelon|pineapple|blueberry|coconut|strawberry|pickle|mango|cucumber|broccoli',hints:['It grows on a plant and is often served fresh.','Its texture and freshness stand out at the table.']},
+  {words:'pancake|croissant|cheesecake|tiramisu|waffle|cupcake|donut|marshmallow',hints:['It is often enjoyed as a sweet treat.','This is the sort of thing people save room for.']},
+  {words:'sushi|lasagna|dumpling|burrito|meatball|spaghetti|omelette|taco|hummus|nachos',hints:['It can make a satisfying meal, often with other ingredients alongside it.','It is commonly served as part of a savory meal.']},
+  {words:'popcorn|pretzel',hints:['It is a familiar snack for sharing.','This is easy to nibble between meals.']}
+ ],fallback:['Think of how it is usually served or enjoyed.','Its place in a meal is a useful clue.']},
+ Countries:{groups:[
+  {words:'japan|thailand|india|vietnam|south korea|nepal',hints:['Look toward South or East Asia on a map.','Its traditions reflect a part of Asia.']},
+  {words:'brazil|argentina|peru|chile|colombia',hints:['Look toward South America on a map.','Its landscapes and culture are associated with South America.']},
+  {words:'kenya|egypt|madagascar|morocco|south africa',hints:['Look toward Africa for its location.','It is associated with the varied landscapes of Africa.']},
+  {words:'greece|portugal|norway|ireland|finland|turkey|iceland|spain|switzerland',hints:['Look toward Europe and its surrounding region on a map.','It is part of a region with a long and varied history.']},
+  {words:'canada|jamaica|mexico',hints:['Look toward North America and the Caribbean on a map.','It is found in the Americas.']},
+  {words:'australia|new zealand',hints:['Look toward the southern Pacific for its location.','It is associated with the islands and lands of the southern Pacific.']}
+ ],fallback:['A map can help place this nation in its wider region.','Its location is a useful place to start.']},
+ Cities:{groups:[
+  {words:'venice|amsterdam',hints:['Waterways are a memorable part of its cityscape.','Its canals are part of what makes the place distinctive.']},
+  {words:'paris|florence|rome',hints:['Art, architecture, and history draw many visitors here.','Its historic streets and landmarks are widely admired.']},
+  {words:'tokyo|seoul|kyoto|mumbai|bangkok|singapore',hints:['It is a major hub in Asia, with a lively urban pace.','Modern city life meets deep traditions here.']},
+  {words:'cairo|marrakech|istanbul',hints:['Its markets and historic architecture are part of its character.','It sits at a crossroads of cultures and history.']},
+  {words:'rio de janeiro|cape town|sydney|vancouver|lisbon|barcelona',hints:['Its setting near the coast is part of its appeal.','The surrounding landscape is a big part of its identity.']},
+  {words:'london|prague|athens|madrid|reykjavík',hints:['Its old streets sit alongside a modern capital-city feel.','History and everyday city life meet here.']},
+  {words:'new york|chicago|mexico city|bangkok|havana|dubai|nairobi|buenos aires',hints:['It is a large, energetic urban center.','A busy skyline and varied neighborhoods are part of its character.']}
+ ],fallback:['Its landmarks and city life help set it apart.','Think about the setting and character of this urban place.']},
+ Movies:{groups:[
+  {words:'toy story|finding nemo|the lion king|frozen|shrek|coco|ratatouille|the incredibles|up|moana|paddington',hints:['Animation brings this story to life.','It is a family-friendly story told through animation.']},
+  {words:'the matrix|inception|interstellar|avatar|e.t.|jurassic park',hints:['It takes audiences into an imaginative world beyond ordinary life.','Science fiction and extraordinary worlds are part of its appeal.']},
+  {words:'jaws|ghostbusters|home alone|barbie|spider-man|black panther|gladiator|rocky',hints:['A memorable central character drives this crowd-pleasing story.','It is known for big moments and a distinctive lead.']},
+  {words:'the godfather|casablanca|the wizard of oz|titanic|mean girls',hints:['It has become a much-quoted screen classic.','Its story and characters have stayed with audiences for years.']}
+ ],fallback:['Think of the kind of story and mood it brings to the screen.','A memorable story or setting is at its heart.']},
+ Sports:{groups:[
+  {words:'surfing|diving|canoeing',hints:['Water is an essential part of the action.','Competitors rely on the water and their control of it.']},
+  {words:'snowboarding|skiing|figure skating|hockey',hints:['Cold conditions and a slick surface are part of the challenge.','It is closely associated with winter and ice or snow.']},
+  {words:'tennis|badminton|table tennis|pickleball',hints:['A racket or paddle is used to send something across a court.','Players face off across a net in this fast exchange.']},
+  {words:'basketball|baseball|volleyball|rugby|soccer|cricket',hints:['Teamwork and scoring are central to the contest.','Players work together to move play toward a scoring opportunity.']},
+  {words:'fencing|boxing|wrestling|taekwondo|archery',hints:['Precision and individual skill matter more than a team formation.','Training and control are key to performing well.']},
+  {words:'rock climbing|gymnastics|marathon|cycling|rowing|golf|bowling|skateboarding',hints:['Control, practice, and physical technique are essential.','It rewards skill and steady practice.']}
+ ],fallback:['Practice and technique are central to this competition.','Think about the skills an athlete needs to perform well.']},
+ Technology:{groups:[
+  {words:'smartphone|laptop|e-reader|smartwatch|game controller|keyboard|touchscreen|calculator',hints:['It is an everyday personal device with an interactive purpose.','People use it directly to get things done or stay entertained.']},
+  {words:'drone|satellite|space station|telescope',hints:['It helps people observe or reach places beyond the ground.','It extends what people can see or do at a distance.']},
+  {words:'solar panel',hints:['It captures energy from a natural source for practical use.','It turns sunlight into a useful source of power.']},
+  {words:'microchip|flash drive|barcode scanner|wi-fi router|bluetooth speaker|microphone|projector|camera|selfie stick',hints:['It helps information, sound, or images move between people and devices.','It plays a supporting role in modern communication or media.']},
+  {words:'electric car|robot|robot vacuum|3d printer',hints:['It uses automation or an electric system to perform a practical task.','Technology helps it do useful work with less manual effort.']},
+  {words:'headphones|virtual reality|podcast|video game',hints:['It can draw you into an audio or digital experience.','It is often used for entertainment through sound or a screen.']}
+ ],fallback:['It solves a modern task through an electronic or digital tool.','Think about the everyday problem this device helps with.']},
+ Objects:{groups:[
+  {words:'umbrella|sunglasses|backpack|suitcase|wallet|thermos',hints:['People often carry it when they leave home.','It is a practical companion for a day out or a trip.']},
+  {words:'scissors|wrench|ruler|stapler|ladder|compass|binoculars',hints:['It is a useful tool for a specific hands-on task.','It helps with a practical job that is harder to do by hand alone.']},
+  {words:'candle|hourglass|alarm clock|snow globe|balloon|origami',hints:['It can add a decorative or playful touch to a room.','It is often noticed for its appearance as much as its use.']},
+  {words:'pillow|hammock|doormat|teapot|thermos|mirror',hints:['It is a familiar part of a home routine.','You might find it in an everyday household setting.']},
+  {words:'soap|toothbrush|feather duster',hints:['It helps keep a person or a space clean.','It is a practical part of a cleaning routine.']},
+  {words:'skateboard',hints:['It is a piece of gear for getting around in a playful way.','Balance and movement are part of using it.']},
+  {words:'key|magnet|compass|binoculars|telescope|hourglass',hints:['Its purpose depends on a simple physical principle.','A small, distinctive function makes it useful.']}
+ ],fallback:['It is a familiar item with a practical everyday purpose.','Think about where you might keep or use this item.']},
+ Professions:{groups:[
+  {words:'chef|baker|gordon ramsay',hints:['Preparing food is at the center of this work.','This role turns ingredients into something people can enjoy.']},
+  {words:'astronaut|pilot|sailor|park ranger|lifeguard',hints:['This role involves working in demanding or unusual surroundings.','It calls for calm decisions away from an ordinary desk.']},
+  {words:'detective|judge|archaeologist|cartographer|journalist',hints:['Careful research and making sense of evidence are important.','This work involves investigating, interpreting, or recording details.']},
+  {words:'firefighter|dentist|veterinarian|paramedic|lifeguard',hints:['Helping people or animals stay safe and well is central.','This role is built around care and quick practical help.']},
+  {words:'architect|sculptor|photographer|animator|florist|tailor',hints:['Creativity and making something tangible are part of the work.','This job combines imagination with skilled hands.']},
+  {words:'teacher|meteorologist|beekeeper|gardener|zookeeper',hints:['Knowledge of a subject or living things guides this work.','Patience and careful observation are useful in this role.']},
+  {words:'magician|drummer',hints:['Performing for an audience is a key part of this work.','This role uses practiced skills to entertain a crowd.']},
+  {words:'locksmith',hints:['This skilled work helps people secure access to a place.','Careful hands and knowledge of locks are important in this trade.']}
+ ],fallback:['This role depends on a particular set of skills and training.','Think about the kind of work and expertise this job requires.']},
+ Celebrities:{groups:[
+  {words:'taylor swift|beyoncé|billie eilish|rihanna|dolly parton|bad bunny|lady gaga|adele|bruno mars|shakira|dua lipa|miley cyrus|harry styles|snoop dogg',hints:['A recognizable voice and songs are central to this public figure’s work.','This person is widely known for performing music.']},
+  {words:'keanu reeves|zendaya|tom hanks|pedro pascal|emma stone|ryan reynolds|jackie chan|emma watson|morgan freeman|chris hemsworth',hints:['Audiences recognize this person from screen roles.','Acting is a major part of this public figure’s career.']},
+  {words:'dwayne johnson|serena williams|lebron james|lionel messi',hints:['This person is celebrated for elite athletic achievement.','A career in high-level sport made this person famous.']},
+  {words:'oprah winfrey|gordon ramsay',hints:['This person is also known for a strong presence on television.','A distinctive media personality helped make this person famous.']}
+ ],fallback:['A public career and a distinctive body of work made this person well known.','Think about the field where this person became a familiar name.']},
+ Nature:{groups:[
+  {words:'waterfall|tidal wave|river delta|tide pool|coral reef|hot spring',hints:['Water shapes this natural feature.','It is a place where water creates a striking landscape.']},
+  {words:'volcano|glacier|desert|canyon|sand dune|mountain peak',hints:['Slow or powerful natural forces shape this landscape.','Its form reflects the long work of the elements.']},
+  {words:'rainbow|thunderstorm|aurora|lightning|eclipse|comet|moonlight',hints:['The sky puts on a striking display connected to this phenomenon.','It is a memorable sight seen above the ground.']},
+  {words:'wildflower|redwood|redwood forest|bamboo forest|mushroom|pinecone|moss|firefly',hints:['Living things are an essential part of this natural sight.','It belongs to the world of plants, fungi, or small wildlife.']},
+  {words:'fossil|seashell|snowflake|mushroom',hints:['A close look reveals a distinctive natural pattern.','Small details make this natural object especially recognizable.']}
+ ],fallback:['It is a natural feature or event shaped without human design.','Think about the landscape or conditions where it appears.']},
+ Transportation:{groups:[
+  {words:'hot air balloon|helicopter|spaceship|glider|rocket|airplane',hints:['It travels through the air rather than along a road.','This way of getting around leaves the ground behind.']},
+  {words:'sailboat|canoe|ferry|gondola|jet ski|cargo ship',hints:['It carries people or goods over water.','A journey on water is what it is made for.']},
+  {words:'subway|tram|monorail|train|cable car',hints:['It follows a fixed route as part of public transit.','This ride carries passengers along a set track or line.']},
+  {words:'tandem bicycle|motorcycle|skateboard|rickshaw|snowmobile|segway|scooter|unicycle|taxi|delivery van|tractor|double-decker bus',hints:['It travels over land, usually on wheels.','This is a way to get around on roads or paths.']},
+  {words:'horse-drawn carriage',hints:['A traditional ride uses an animal to pull it.','It belongs to an older era of personal travel.']}
+ ],fallback:['It is designed to carry people or things from one place to another.','Its main purpose is getting a passenger or cargo to a destination.']},
+ 'Random Mix':{groups:[
+  {words:'birthday cake|costume party|school dance|fireworks|photo booth|sleepover',hints:['It is often part of a group celebration.','People gather for this during a special occasion.']},
+  {words:'treasure map|secret agent|secret handshake|treasure chest|fortune cookie|diary',hints:['A secret or a surprise is part of the fun.','It hints at something hidden, private, or waiting to be discovered.']},
+  {words:'snowman|campfire|sandcastle|treehouse|pillow fort|haunted house',hints:['It is something people might build or experience for fun.','Making or exploring it can become an adventure.']},
+  {words:'roller coaster|board game|magic trick|puppet show|karaoke',hints:['It is made for entertainment and shared enjoyment.','This is an activity people enjoy together.']},
+  {words:'time machine|magic carpet|pirate ship|spaceship|magic trick',hints:['Imagination takes it beyond ordinary everyday life.','A touch of fantasy makes it memorable.']},
+  {words:'water balloon|soap bubbles|paper airplane|traffic jam|school dance',hints:['It is a familiar part of play or everyday life.','You may have encountered it during a lively day.']}
+ ],fallback:['It is tied to a familiar activity, place, or experience.','Think about when people might encounter or enjoy it.']}
+};
+function generateHint(word,category){
+ const rules=HINT_RULES[category];if(!rules)return '';
+ const key=word.toLowerCase();
+ const group=rules.groups.find(rule=>rule.words.split('|').includes(key));
+ const choices=group?group.hints:rules.fallback;
+ const index=[...key].reduce((sum,char)=>sum+char.charCodeAt(0),0)%choices.length;
+ const hint=choices[index];
+ const hintWords=hint.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean),secretWords=key.split(/[^a-z0-9]+/).filter(Boolean);
+ const revealsWord=secretWords.length&&hintWords.some((_,i)=>secretWords.every((part,j)=>hintWords[i+j]===part));
+ return revealsWord?rules.fallback[(index+1)%rules.fallback.length]:hint;
+}
 function render(){clearInterval(state.interval);if(state.phase==='setup')renderSetup();else if(state.phase==='deal')renderDeal();else if(state.phase==='clues')renderClues();else if(state.phase==='discussion')renderDiscussion();else if(state.phase==='startingPlayer')renderStartingPlayer();else if(state.phase==='verbalDiscussion')renderVerbalDiscussion();else if(state.phase==='vote')renderVote();else if(state.phase==='result')renderResult();else if(state.phase==='stats')renderStats()}
 function renderSetup(){
  const categories=allCategories();if(!state.settings.categories.length)state.settings.categories=['Random Mix'];
@@ -82,7 +193,7 @@ function createParty(){app.insertAdjacentHTML('beforeend',`<div class="pack-moda
 function addPlayer(){const input=document.querySelector('#playerInput'),name=input.value.trim();if(!name)return;if(state.players.length>=12){toast('The room is full (12 players max).');return}if(state.players.some(n=>n.toLowerCase()===name.toLowerCase())){toast('That name is already in the room.');input.focus();return}state.players.push(name);save();render();document.querySelector('#playerInput').focus()}
 function saveEdit(commit){const input=document.querySelector('.edit-name');if(!input)return;const idx=+input.dataset.index;const name=input.value.trim();if(commit&&name&&!state.players.some((n,i)=>i!==idx&&n.toLowerCase()===name.toLowerCase()))state.players[idx]=name;else if(commit&&name)toast('Choose a name that’s not already taken.');state.editing=-1;save();render()}
 function startGame(){const v=document.querySelector('#validation');if(state.players.length<3||state.settings.imposters>=state.players.length||state.settings.imposters<1){if(v)v.textContent=state.players.length<3?'Add at least 3 players to start.':'Leave at least two non-imposters in the game.';return}if(!state.settings.categories.length){if(v)v.textContent='Pick at least one word category.';return}
- const pool=[...new Set(state.settings.categories.flatMap(wordsFor))];if(!pool.length){toast('No words available. Choose another category.');return}let fresh=pool.filter(w=>!state.usedWords.includes(w));if(!fresh.length){state.usedWords=[];fresh=pool}state.word=fresh[Math.floor(Math.random()*fresh.length)];state.usedWords.push(state.word);state.wordCategory=state.settings.categories.find(category=>wordsFor(category).includes(state.word))||BASE_CATEGORIES.find(category=>wordsFor(category).includes(state.word))||'Uncategorized';state.hint=state.settings.hints?'Think of a word that can be described in many different ways.':'';state.matchId=`match-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;state.startingPlayer='';state.verbalStarted=false;const order=randomize([...state.players]);const bad=randomize([...order]).slice(0,state.settings.imposters);state.roles=order.map(name=>({name,imposter:bad.includes(name)}));state.clues=[];state.votes={};state.voteIndex=0;state.roleIndex=0;state.revealed=false;state.roleSeen=false;state.phase='deal';render()}
+ const pool=[...new Set(state.settings.categories.flatMap(wordsFor))];if(!pool.length){toast('No words available. Choose another category.');return}let fresh=pool.filter(w=>!state.usedWords.includes(w));if(!fresh.length){state.usedWords=[];fresh=pool}state.word=fresh[Math.floor(Math.random()*fresh.length)];state.usedWords.push(state.word);state.wordCategory=state.settings.categories.find(category=>wordsFor(category).includes(state.word))||BASE_CATEGORIES.find(category=>wordsFor(category).includes(state.word))||'Uncategorized';state.hint=state.settings.hints?generateHint(state.word,state.wordCategory):'';state.matchId=`match-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;state.startingPlayer='';state.verbalStarted=false;const order=randomize([...state.players]);const bad=randomize([...order]).slice(0,state.settings.imposters);state.roles=order.map(name=>({name,imposter:bad.includes(name)}));state.clues=[];state.votes={};state.voteIndex=0;state.roleIndex=0;state.revealed=false;state.roleSeen=false;state.phase='deal';render()}
 function renderDeal(){const p=state.roles[state.roleIndex];const last=state.roleIndex===state.roles.length-1;app.innerHTML=`<div class="phase-wrap"><div class="phase-head"><div class="eyebrow">ROUND ${state.round} <span>·</span> SECRET ROLE</div><span class="round-tag">${state.roleIndex+1} OF ${state.players.length}</span></div><section class="panel phase-card"><div class="step-count">PRIVATE SCREEN · ONLY ${esc(p.name.toUpperCase())} SHOULD LOOK</div><h1>Pass the phone<br>to <em>${esc(p.name)}.</em></h1><p class="phase-description">Make sure everyone else is looking away. Tap below when you’re ready to see your role.</p><div class="secret-box ${state.revealed?'':'hidden'}">${state.revealed?`${p.imposter?`<div class="secret-value">YOU ARE THE IMPOSTER</div><div class="secret-role danger">${state.settings.hints?`HINT: ${esc(state.hint)}`:'BLEND IN. YOU DO NOT KNOW THE WORD.'}</div>`:`<div class="secret-value">${esc(state.word.toUpperCase())}</div><div class="category-label">CATEGORY</div><div class="category-value">${esc(state.wordCategory||'Uncategorized').toUpperCase()}</div><div class="secret-role">YOU ARE IN THE KNOW · KEEP IT SECRET</div>`}`:`<div class="secret-value" style="color:#a7aaa0">••••••••</div><div class="secret-role">YOUR ROLE IS HIDDEN</div>`}</div><p class="hold-note">${state.revealed?'Memorize it. Then tap hide before passing the phone.':'No peeking, everyone else 👀'}</p><div class="action-row">${state.revealed?`<button id="hideRole" class="secondary-btn">Hide my role</button><button id="nextRole" class="primary-btn">${last?'EVERYONE’S READY':'PASS TO NEXT PLAYER'} &nbsp;→</button>`:`<button id="revealRole" class="primary-btn">REVEAL MY ROLE &nbsp;👁</button>${state.roleSeen?`<button id="nextRole" class="secondary-btn">${last?'EVERYONE’S READY':'PASS TO NEXT PLAYER'} &nbsp;→</button>`:''}`}</div><div class="progress-dots">${state.roles.map((_,i)=>`<span class="${i<=state.roleIndex?'done':''}"></span>`).join('')}</div></section><div class="setup-footnote">KEEP YOUR SCREEN TO YOURSELF — THE WHOLE GAME DEPENDS ON IT</div></div>`;
  const revealButton=document.querySelector('#revealRole');if(revealButton)revealButton.onclick=()=>{state.revealed=true;state.roleSeen=true;render()};if(state.revealed)document.querySelector('#hideRole').onclick=()=>{state.revealed=false;render()};if(state.revealed||state.roleSeen)document.querySelector('#nextRole').onclick=()=>{state.revealed=false;state.roleSeen=false;if(last){if(state.settings.typedClues){state.phase='clues';state.clueIndex=0}else{state.startingPlayer=getStartingPlayer();state.verbalStarted=false;state.phase='startingPlayer'}}else state.roleIndex++;render()}
 }
