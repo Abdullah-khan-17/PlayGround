@@ -478,6 +478,10 @@ button:not(:disabled){touch-action:manipulation}.phase-card h1,.stats-wrap .phas
 .pack-modal{background:rgba(24,38,29,.56);backdrop-filter:blur(5px);padding:max(20px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left))}
 .modal-card{max-height:min(90svh,720px);overflow:auto;box-shadow:0 24px 80px rgba(17,35,23,.22)}
 .toast{bottom:max(25px,calc(env(safe-area-inset-bottom) + 12px));max-width:calc(100vw - 32px);text-align:center}
+.player-list{max-height:min(55vh,520px);align-content:start;overscroll-behavior:contain;scrollbar-gutter:stable}
+.imposter-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-height:min(34vh,220px);overflow-y:auto;align-content:start;overscroll-behavior:contain;scrollbar-gutter:stable}
+.imposter-choices button{min-width:0;padding:8px 5px}
+@media(max-width:650px){.player-list{max-height:min(50vh,420px)}}
 @media(max-width:650px){
  html{scrollbar-gutter:auto}body{background-attachment:scroll}.app-shell{padding-right:max(14px,env(safe-area-inset-right));padding-left:max(14px,env(safe-area-inset-left))}
  .topbar{gap:10px}.top-meta{min-width:0;letter-spacing:.65px}.icon-button{flex:none}.party-bar,.panel,.phase-card,.stats-panel,.clue-card{box-shadow:0 12px 30px rgba(28,48,34,.055),0 1px 4px rgba(28,48,34,.025)}
