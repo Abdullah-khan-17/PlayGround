@@ -383,6 +383,13 @@ footer{border-color:rgba(40,66,47,.14);color:#829087;font-size:9px;letter-spacin
 .hero-line{margin-bottom:30px;align-items:flex-end}.hero-line h1{font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:clamp(42px,5vw,62px);font-weight:650;letter-spacing:-.065em;line-height:.98;margin-top:15px}
 .hero-line h1 em,.phase-card h1 em,.stats-wrap .phase-head h1 em{color:#71943d}.hero-copy{max-width:260px;color:#718077;font-size:13px;line-height:1.75;margin-bottom:4px}
 .party-bar{border-color:#dce4d8;background:rgba(255,254,250,.88);border-radius:14px;padding:13px 16px;box-shadow:0 8px 26px rgba(28,48,34,.035)}
+.party-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px}
+.party-actions .mini-link{border-radius:8px;font-size:9px;letter-spacing:.045em}
+.party-actions .delete-party{color:#a45c4c}
+.party-actions .delete-party:hover{color:#8e3f32;background:#fbf0e9}
+.danger-btn{min-height:40px;padding:0 15px;border:1px solid #b75b47;border-radius:10px;background:#b75b47;color:#fffefa;font-size:11px;font-weight:700;transition:background .18s,border-color .18s,transform .18s}
+.danger-btn:hover{background:#984735;border-color:#984735;transform:translateY(-1px)}
+.danger-btn:focus-visible{outline-color:#b75b47}
 .party-select{transition:border-color .18s,box-shadow .18s}.party-select:focus{border-color:#9bbf58;box-shadow:0 0 0 4px rgba(177,218,98,.18)}
 .setup-grid{grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);gap:18px}
 .panel{border-color:#e0e5db;border-radius:17px;background:rgba(255,254,250,.94);box-shadow:var(--shadow)}.players-panel{padding:clamp(20px,2.4vw,30px)}.settings-panel{padding:22px 23px 18px}
@@ -455,6 +462,7 @@ footer{border-color:rgba(40,66,47,.14);color:#829087;font-size:9px;letter-spacin
   .app-shell{padding-right:14px;padding-left:14px}.top-meta{font-size:7px;letter-spacing:.5px;gap:6px}
   .hero-line{align-items:flex-end;gap:8px}.hero-line h1{font-size:37px;letter-spacing:-.07em}.hero-copy{max-width:132px;font-size:10px}
   .party-bar{display:grid;grid-template-columns:minmax(0,1fr)}.party-bar>div,.party-bar .secondary-btn,.party-bar .mini-link{grid-column:1;grid-row:auto}
+  .party-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.party-actions .delete-party{grid-column:1/-1}
   .party-bar .secondary-btn,.party-bar .mini-link{width:100%}.panel-heading{gap:8px}.panel-heading h2{font-size:16px}
   .count-pill{padding:7px 8px;font-size:9px;white-space:nowrap}.add-player{gap:7px}.add-player .text-input{padding:0 10px;font-size:12px}
   .add-btn{padding:0 11px;font-size:11px}.player-list{grid-template-columns:1fr}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
