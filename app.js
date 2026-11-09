@@ -117,7 +117,6 @@ Rome|A European city filled with ancient history
 Mumbai|A coastal Indian metropolis and film industry centre
 Delhi|A major Indian city with layers of historical architecture
 Sydney|An Australian coastal city with a famous harbour
-Singapore|A compact island city-state with impressive urban planning
 Istanbul|A historic city spanning two continents
 Barcelona|A Mediterranean city famous for distinctive architecture
 Cairo|A major African city near ancient monuments
@@ -239,13 +238,10 @@ Microscope|An instrument used to examine very small things
 Compass|A navigation tool that helps identify direction
 Mirror|A household item that reflects an image
 Clock|An object used to track the passage of time
-Camera|A device used to capture moments
 Suitcase|A container designed for carrying travel belongings
 Flashlight|A portable device that produces a beam of light
 Thermometer|An instrument used to measure temperature
 Binoculars|An optical tool for viewing distant subjects
-Keyboard|An input device with multiple keys
-Headphones|An audio accessory worn over or inside the ears
 Lantern|A portable light source often used outdoors
 Water Bottle|A reusable container for carrying drinks
 Padlock|A portable device used to secure belongings
@@ -390,32 +386,17 @@ Monorail|A train system that travels along a single supporting rail.`,
 Sunflower|A tall flowering plant whose large yellow head follows the sunlight.
 Snowman|A figure made by stacking snow into a human-like shape.
 Bookshelf|Furniture designed to store and display books.
-Butterfly|A colourful flying insect with large patterned wings.
-Toothbrush|An everyday item used for cleaning teeth.
 Starfish|A marine animal commonly recognised by its star-shaped body.
 Lighthouse|A coastal structure that guides ships using a powerful light.
 Raincoat|Clothing designed to keep someone dry during wet weather.
-Firefighter|A person trained to respond to fires and emergencies.
-Basketball|A sport played by shooting a ball through an elevated hoop.
-Waterfall|Water flowing over a steep natural edge.
-Moonlight|Natural light that comes from the Moon at night.
-Dragonfly|A flying insect with a long body and transparent wings.
-Skateboard|A small wheeled board used for riding and tricks.
 Mailbox|A container where letters and deliveries are placed.
-Cupcake|A small individual cake usually topped with icing.
 Airport|A place where aircraft take off, land and carry passengers.
 Bedroom|A private room mainly used for sleeping.
 Keychain|A small accessory used to hold and organise keys.
-Sunglasses|Eyewear designed to protect the eyes from bright sunlight.
-Earthquake|A natural event involving sudden movement of the ground.
 Hairbrush|A personal grooming tool used to arrange and smooth hair.
-Football|A team sport played by moving a ball towards a goal.
 Handshake|A greeting made by briefly holding another person's hand.
-Jellyfish|A soft-bodied sea creature with trailing tentacles.
 Newspaper|A printed publication containing news and current events.
-Pineapple|A tropical fruit with a rough outer surface and sweet interior.
 Doorbell|A device that makes a sound when someone visits a home.
-Snowflake|A tiny ice crystal that forms in freezing clouds.
 Wristwatch|A small timekeeping device worn around the wrist.`
 };
 const normalizeWordKey = word => String(word).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
