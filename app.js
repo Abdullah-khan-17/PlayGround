@@ -13,6 +13,367 @@ const WORDS = {
   Transportation: `Hot air balloon, Subway, Sailboat, Tractor, Helicopter, Tandem bicycle, Cable car, Canoe, Motorcycle, Spaceship, Tram, Cable ferry, Rickshaw, Ferry, Snowmobile, Electric train, Train, Segway, Gondola, Double-decker bus, Glider, Jet ski, Delivery van, Horse-drawn carriage, Rocket, Scooter, Cargo ship, Unicycle, Taxi, Airplane, Submarine, Bulldozer, Tractor-trailer, Electric bus, Limousine, Ambulance, Fire engine, School bus, Speedboat, Kayak, Rowboat, Cruise ship, Container ship, Hovercraft, Dog sled, Autogyro, Funicular, Maglev train, Trolleybus, Moped, Snowplow, Cement mixer, Forklift, Road roller, Gondola lift, Space shuttle, Lunar rover, Paraglider, Bicycle taxi, Velocipede, Monorail`,
   'Random Mix': `Karaoke, Birthday cake, Treasure map, Pillow fort, Snowman, Roller coaster, Secret agent, Time machine, Campfire, Magic trick, School dance, Haunted house, Treasure chest, Costume party, Soap bubbles, Photo booth, Paper airplane, Secret handshake, Sleepover, Board game, Sandcastle, Fortune cookie, Puppet show, Fireworks, Diary, Water balloon, Pirate ship, Treehouse, Traffic jam, Magic carpet, Lemonade stand, Scavenger hunt, Costume, Birthday card, Paper crown, Picnic basket, Secret passage, Puppet, Magic wand, Campground, Road trip, Movie night, Talent show, Parade, Carnival, Hide-and-seek, Treasure hunt, Pillow fight, Book club, Bake sale, Rainy day, Backyard, Camp badge, Friendship bracelet, Paper lantern, Mystery box, Time capsule, Bubble bath, Kite festival, Family reunion, Surprise party`
 };
+const CURATED_HINT_DATA = {
+  Animals: `
+Lion|A powerful animal associated with grasslands
+Elephant|A huge animal known for its memory
+Penguin|A bird adapted to extremely cold environments
+Giraffe|An animal that feeds high above the ground
+Dolphin|An intelligent creature found in the ocean
+Kangaroo|An animal famous for carrying its young
+Tiger|A solitary hunter with distinctive markings
+Zebra|A grazing animal with a striking pattern
+Owl|A bird strongly associated with nighttime
+Crocodile|A powerful reptile found near water
+Panda|A bear that has a very specialised diet
+Cheetah|A land animal famous for speed
+Camel|An animal adapted to dry environments
+Peacock|A bird known for its elaborate display
+Wolf|A wild animal that often lives in groups
+Fox|A clever animal found in many habitats
+Koala|A tree-dwelling animal with a specialised diet
+Gorilla|A powerful primate with complex social behaviour
+Flamingo|A bird often seen standing in shallow water
+Octopus|An ocean creature with remarkable problem-solving abilities
+Shark|A major predator in marine ecosystems
+Eagle|A bird associated with excellent eyesight
+Hedgehog|A small animal with natural protective spines
+Sloth|A tree-dwelling animal known for slow movement
+Chameleon|A reptile famous for changing its appearance
+Rhinoceros|A large mammal with thick skin
+Hippopotamus|A massive animal that spends much time in water
+Bat|A flying mammal that often navigates in darkness
+Squirrel|A small animal that stores food for later
+Polar Bear|A large predator adapted to icy regions`,
+  Food: `
+Pizza|A popular shared meal with many toppings
+Sushi|A traditional dish associated with Japanese cuisine
+Burger|A handheld meal often served with fries
+Pasta|A staple food with countless shapes and sauces
+Strawberry|A sweet fruit often used in desserts
+Chocolate|A popular treat made from a tropical crop
+Pancake|A breakfast favourite often served with syrup
+Biryani|A fragrant rice dish with regional variations
+Tacos|A handheld meal associated with Mexican cuisine
+Sandwich|A convenient meal built between slices of bread
+Ice Cream|A frozen dessert available in many flavours
+Popcorn|A snack strongly associated with cinemas
+Noodles|A versatile food found in many Asian cuisines
+Croissant|A flaky baked item popular at breakfast
+Doughnut|A sweet bakery treat often topped or filled
+Lasagna|A layered baked dish with pasta
+Mango|A tropical fruit known for its sweetness
+Watermelon|A refreshing fruit with high water content
+Cheese|A dairy product made in many varieties
+Waffle|A breakfast food with a patterned surface
+Dumplings|Small filled parcels cooked in different ways
+Samosa|A savoury snack with a crisp outer layer
+Ramen|A Japanese meal centred around a warm broth
+Cupcake|A small individual baked dessert
+French Fries|A popular side dish made from a vegetable
+Coconut|A tropical fruit with a hard outer shell
+Doner Kebab|A popular street food made with seasoned meat
+Pudding|A dessert that can be creamy or baked
+Garlic Bread|A savoury baked side with a strong aroma
+Cheesecake|A dessert with a rich dairy-based filling`,
+  Countries: `
+Japan|An island nation known for advanced technology and tradition
+Brazil|A South American nation famous for football and festivals
+Canada|A large country known for forests and cold winters
+Egypt|A North African nation with ancient monuments
+Australia|A country and continent surrounded by ocean
+France|A European nation associated with fashion and fine cuisine
+India|A South Asian nation with many languages and cultures
+Germany|A European nation with a strong engineering tradition
+Italy|A European nation known for art and regional cuisine
+China|An East Asian nation with a very long history
+Mexico|A North American nation with rich food traditions
+Spain|A European nation known for lively festivals
+Norway|A northern European nation associated with fjords
+Kenya|An East African nation known for wildlife reserves
+Greece|A Mediterranean nation linked to ancient philosophy
+Switzerland|A European nation known for alpine landscapes
+South Korea|An East Asian nation influential in entertainment and electronics
+New Zealand|An island nation known for dramatic natural scenery
+Argentina|A South American nation with a strong football culture
+Thailand|A Southeast Asian nation known for tropical destinations
+Turkey|A nation connecting Europe and Asia
+Iceland|A northern island nation with volcanic landscapes
+Portugal|A European nation with a long maritime history
+Nepal|A Himalayan nation with dramatic mountain terrain
+South Africa|A nation at the southern end of the African continent
+Indonesia|An island nation spread across a vast archipelago
+Sweden|A Nordic nation associated with design and innovation
+Saudi Arabia|A Middle Eastern nation with vast desert regions
+Ireland|An island nation known for its green countryside
+Peru|A South American nation with ancient mountain settlements`,
+  Cities: `
+Tokyo|A huge East Asian metropolis with a famous rail network
+Paris|A European city associated with art and romance
+London|A historic capital divided by a famous river
+New York|A major city known for its skyline and busy streets
+Dubai|A desert metropolis known for ambitious architecture
+Rome|A European city filled with ancient history
+Mumbai|A coastal Indian metropolis and film industry centre
+Delhi|A major Indian city with layers of historical architecture
+Sydney|An Australian coastal city with a famous harbour
+Singapore|A compact island city-state with impressive urban planning
+Istanbul|A historic city spanning two continents
+Barcelona|A Mediterranean city famous for distinctive architecture
+Cairo|A major African city near ancient monuments
+Seoul|A modern Asian capital with a major pop-culture influence
+Bangkok|A Southeast Asian capital known for temples and markets
+Amsterdam|A European city with canals and cycling culture
+Venice|An Italian city built around waterways
+Berlin|A European capital associated with major historical events
+Toronto|Canada's largest city with a diverse population
+Los Angeles|A major American city closely linked to filmmaking
+Kyoto|A Japanese city known for traditional architecture
+Jaipur|An Indian city associated with royal heritage
+Istanbul|A historic meeting point of European and Asian cultures
+Rio de Janeiro|A Brazilian coastal city known for dramatic scenery
+Moscow|A major city with famous historic squares
+Cape Town|A South African city beside a distinctive mountain
+Madrid|Spain's capital and a major cultural centre
+Auckland|A New Zealand city surrounded by harbours
+Lisbon|A European coastal capital known for steep streets
+Agra|An Indian city famous for a major marble monument`,
+  Movies: `
+Titanic|A romantic drama centred on a famous maritime disaster
+Avatar|A science-fiction adventure set on an extraordinary moon
+Jurassic Park|An adventure involving prehistoric creatures brought back to life
+The Lion King|An animated story about family and leadership in the wild
+Finding Nemo|An underwater adventure about a parent's search
+Frozen|An animated fantasy involving two royal sisters
+Harry Potter|A fantasy film series set in a school of magic
+The Dark Knight|A superhero story set in a crime-filled city
+Inception|A science-fiction thriller involving layered dreams
+Interstellar|A space adventure focused on humanity's future
+Toy Story|An animated adventure about toys with secret lives
+The Avengers|A superhero team unites against major threats
+Spider-Man|A young hero balances ordinary life with extraordinary abilities
+Jaws|A suspense film involving danger beneath the ocean
+Home Alone|A comedy about a child defending a house
+Coco|An animated story exploring family and remembrance
+Shrek|A fairy-tale comedy featuring an unlikely hero
+Moana|An ocean adventure involving a young island navigator
+Up|An animated adventure involving an unusual flying home
+The Matrix|A science-fiction story questioning perceived reality
+Gladiator|A historical drama involving an arena fighter
+Black Panther|A superhero story involving an advanced African kingdom
+Coco|A family adventure centred on music and memory
+Dune|A science-fiction epic involving a desert planet
+The Incredibles|An animated family adventure about hidden super abilities
+Ratatouille|An animated story about an unexpected kitchen talent
+Inside Out|An animated film exploring emotions and memories
+Kung Fu Panda|A comedy about an unlikely martial arts student
+Mission: Impossible|An action series involving dangerous secret missions
+The Jungle Book|An adventure about a child growing up among animals`,
+  Sports: `
+Football|A team sport played with a ball and goals
+Cricket|A bat-and-ball game with wickets
+Basketball|A team game involving hoops and bouncing a ball
+Tennis|A racket sport played across a net
+Badminton|A racket game using a lightweight flying object
+Volleyball|A team sport involving a net and airborne ball
+Swimming|A competitive activity performed in water
+Boxing|A combat sport involving gloves and timed rounds
+Wrestling|A sport focused on grappling and control
+Rugby|A physical team game involving an oval ball
+Golf|A precision sport involving clubs and small holes
+Hockey|A team game played with sticks and a puck or ball
+Table Tennis|A fast racket game played on a small table
+Athletics|A collection of running, jumping and throwing events
+Cycling|A competitive sport involving two-wheeled machines
+Gymnastics|A sport involving balance, strength and controlled movement
+Archery|A precision sport using a bow
+Fencing|A competitive sport involving protective gear and blades
+Formula One|A motor racing championship with specialised cars
+Skiing|A winter sport performed on snow-covered slopes
+Surfing|A water sport using moving ocean waves
+Baseball|A bat-and-ball sport with bases and innings
+Marathon|A long-distance running event
+Kabaddi|A South Asian team sport involving tagging and breath control
+Chess|A competitive strategy game played on a board
+Judo|A Japanese martial art focused on throws and control
+Taekwondo|A Korean martial art known for kicking techniques
+Rowing|A water sport involving coordinated oar movement
+Skateboarding|A sport performed on a wheeled board
+Shooting|A precision sport involving target accuracy`,
+  Technology: `
+Smartphone|A handheld device combining communication and computing
+Laptop|A portable computer designed for personal use
+Artificial Intelligence|Technology that enables machines to perform intelligent tasks
+Robot|A programmable machine capable of physical actions
+Drone|An aircraft that can operate without an onboard pilot
+Virtual Reality|Technology that creates an immersive digital environment
+3D Printer|A machine that creates physical objects from digital designs
+Satellite|A machine placed in orbit for communication or observation
+Supercomputer|A machine built for extremely demanding calculations
+Microchip|A tiny electronic component used in computing
+Blockchain|A digital record system organised into linked data blocks
+Cloud Computing|A way to use remote computing resources over networks
+Cybersecurity|The practice of protecting digital systems and information
+Quantum Computer|A specialised computer based on principles of quantum physics
+GPS|A system that helps determine location using satellites
+Solar Panel|A device that converts sunlight into electricity
+Electric Vehicle|A vehicle powered by stored electrical energy
+Operating System|Software that manages a computer's hardware and applications
+Database|An organised collection of information
+3D Scanner|A device that captures the shape of real objects digitally
+Touchscreen|A display that responds to physical contact
+Wi-Fi|A wireless way to connect devices to a network
+Bluetooth|A short-range wireless communication technology
+Processor|A computer component responsible for executing instructions
+Graphics Card|Hardware designed to process visual information
+Hologram|A visual representation that appears three-dimensional
+Biometric Scanner|Technology that recognises people using physical characteristics
+Smartwatch|A wearable device with digital features
+Fibre Optics|Technology that sends information using light
+Machine Learning|A field where computer systems learn patterns from data`,
+  Objects: `
+Umbrella|An everyday item used during wet weather
+Backpack|A portable container carried on the shoulders
+Telescope|An instrument used to observe distant objects
+Microscope|An instrument used to examine very small things
+Compass|A navigation tool that helps identify direction
+Mirror|A household item that reflects an image
+Clock|An object used to track the passage of time
+Camera|A device used to capture moments
+Suitcase|A container designed for carrying travel belongings
+Flashlight|A portable device that produces a beam of light
+Thermometer|An instrument used to measure temperature
+Binoculars|An optical tool for viewing distant subjects
+Keyboard|An input device with multiple keys
+Headphones|An audio accessory worn over or inside the ears
+Lantern|A portable light source often used outdoors
+Water Bottle|A reusable container for carrying drinks
+Padlock|A portable device used to secure belongings
+Scissors|A handheld tool used for cutting materials
+Stapler|An office tool that fastens sheets together
+Magnifying Glass|An optical tool that makes small details easier to see
+Hourglass|A timekeeping object that uses flowing sand
+Thermos|An insulated container that helps maintain drink temperature
+Paintbrush|A tool used to apply colour to surfaces
+Suit|A formal set of clothing worn together
+Helmet|Protective equipment worn on the head
+Tripod|A three-legged support for cameras or equipment
+Remote Control|A handheld device used to operate equipment from a distance
+Globe|A model representing the shape of Earth
+Wallet|A small item used to organise payment cards and cash
+Pad|A small surface used for writing or drawing`,
+  Professions: `
+Doctor|A professional who diagnoses and treats illness
+Teacher|Someone who helps others gain knowledge
+Engineer|A professional who designs and solves technical problems
+Architect|Someone who plans buildings and spaces
+Chef|A professional responsible for preparing meals
+Pilot|A professional trained to operate aircraft
+Astronaut|Someone trained to work beyond Earth's atmosphere
+Scientist|A person who investigates questions through research
+Photographer|Someone who creates images using cameras
+Journalist|A professional who reports news and events
+Lawyer|Someone who advises or represents people in legal matters
+Dentist|A healthcare professional focused on oral health
+Pharmacist|A professional who prepares and supplies medicines
+Firefighter|Someone trained to respond to fires and emergencies
+Police Officer|A public professional responsible for enforcing laws
+Electrician|A skilled worker who installs and maintains electrical systems
+Plumber|A professional who works with water and drainage systems
+Mechanic|Someone who repairs and maintains machines or vehicles
+Software Developer|A professional who builds computer programs
+Data Scientist|Someone who studies information to discover useful patterns
+Designer|A professional who plans how products or visuals should look and work
+Farmer|Someone who grows crops or raises livestock
+Veterinarian|A healthcare professional who treats animals
+Musician|Someone who performs or creates music
+Actor|A performer who portrays characters
+Accountant|A professional who manages financial records
+Fashion Designer|Someone who creates clothing concepts and styles
+Translator|Someone who converts information between languages
+Psychologist|A professional who studies human behaviour and mental processes
+Researcher|Someone who investigates questions to develop new knowledge`,
+  Celebrities: `
+Shah Rukh Khan|A Bollywood star often called the King of Romance
+Amitabh Bachchan|An iconic Indian actor with a distinctive deep voice
+Virat Kohli|An Indian sports star known for aggressive batting
+MS Dhoni|An Indian cricket figure famous for calm leadership
+Sachin Tendulkar|A legendary batter celebrated across generations
+Lionel Messi|An Argentine football icon known for exceptional dribbling
+Cristiano Ronaldo|A Portuguese football star famous for athletic discipline
+Neymar|A Brazilian footballer known for creative attacking play
+Taylor Swift|A global singer known for storytelling in songs
+Ed Sheeran|A singer-songwriter often associated with acoustic performances
+Beyoncé|A celebrated performer known for powerful vocals and choreography
+Rihanna|A music star who also built a major beauty business
+Justin Bieber|A singer who became famous at a young age
+Billie Eilish|A singer known for a distinctive alternative pop style
+Adele|A singer recognised for powerful emotional ballads
+Dwayne Johnson|A former wrestling star who became a major film actor
+Tom Cruise|An actor known for performing many of his own action stunts
+Leonardo DiCaprio|An actor associated with several acclaimed dramatic films
+Robert Downey Jr.|An actor famous for portraying a genius superhero
+Emma Watson|An actor who became famous in a fantasy film series
+Jackie Chan|An actor known for combining comedy with martial arts
+Priyanka Chopra|An Indian actor who also built an international career
+Deepika Padukone|An Indian film star known for major dramatic roles
+Alia Bhatt|An Indian actor who began performing at a young age
+Zendaya|A performer known for television, film and fashion
+Ariana Grande|A singer recognised for an extensive vocal range
+Drake|A Canadian artist known for blending rap and singing
+Eminem|A rapper celebrated for complex lyrical techniques
+Mark Zuckerberg|A technology entrepreneur associated with a major social platform
+Elon Musk|A business figure linked to electric vehicles and space technology`,
+  Nature: `
+Waterfall|Flowing water dropping from a height
+Volcano|A geological formation that can release molten material
+Glacier|A huge mass of slowly moving ice
+Rainbow|A colourful arc that can appear after rainfall
+Tornado|A violently rotating column of air
+Earthquake|Sudden movement within Earth's crust
+Desert|A region that receives very little rainfall
+Rainforest|A dense ecosystem with abundant rainfall
+Coral Reef|An underwater ecosystem built by tiny organisms
+Northern Lights|Colourful atmospheric displays near polar regions
+Mountain|A major raised landform
+Valley|Low land situated between higher areas
+Canyon|A deep narrow landform carved by erosion
+Ocean|A vast body of salt water
+River|A natural flowing body of water
+Island|Land completely surrounded by water
+Cave|A natural underground or rock opening
+Sand Dune|A hill of loose material shaped by wind
+Hot Spring|Naturally heated water emerging from the ground
+Mangrove|A coastal ecosystem with trees adapted to salty water
+Savanna|A grassland ecosystem with scattered trees
+Wetland|An ecosystem where land is regularly saturated with water
+Meteor Shower|A series of bright streaks appearing in the night sky
+Eclipse|An astronomical event involving one body blocking another
+Tsunami|A series of powerful ocean waves caused by displacement
+Fossil|Preserved evidence of ancient life
+Bamboo Forest|A woodland dominated by a fast-growing plant
+Tidal Wave|A powerful movement of ocean water linked to changing tides
+Sandstorm|A weather event involving airborne dust and sand
+Aurora|A colourful light display in the upper atmosphere`
+};
+const normalizeWordKey = word => String(word).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+const CURATED_HINTS = Object.fromEntries(Object.entries(CURATED_HINT_DATA).map(([category, data]) => {
+  const hints = new Map();
+  for (const line of data.trim().split('\n')) {
+    const separator = line.indexOf('|');
+    const word = normalizeWordKey(line.slice(0, separator));
+    if (!hints.has(word)) hints.set(word, line.slice(separator + 1));
+  }
+  return [category, hints];
+}));
+for (const [category, hints] of Object.entries(CURATED_HINTS)) {
+  const existing = new Set(WORDS[category].split(',').map(word => normalizeWordKey(word)));
+  for (const word of hints.keys()) if (!existing.has(word)) {
+    const sourceLine = CURATED_HINT_DATA[category].trim().split('\n').find(line => normalizeWordKey(line.slice(0, line.indexOf('|'))) === word);
+    WORDS[category] += `, ${sourceLine.slice(0, sourceLine.indexOf('|'))}`;
+    existing.add(word);
+  }
+}
 const BASE_CATEGORIES = Object.keys(WORDS);
 const DEFAULT_NAMES = ['Alex','Sam','Jordan','Taylor'];
 function readStore(key,fallback){try{const value=JSON.parse(localStorage.getItem(key));return value===null?fallback:value}catch{return fallback}}
@@ -181,6 +542,8 @@ function hintHash(word,category){
  return hash>>>0;
 }
 function generateHint(word,category){
+ const curatedHint=CURATED_HINTS[category]?.get(normalizeWordKey(word));
+ if(curatedHint)return curatedHint;
  const rules=HINT_RULES[category];
  const key=String(word||'').trim().toLowerCase();
  const group=rules?.groups.find(rule=>rule.words.split('|').includes(key));
