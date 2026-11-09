@@ -354,7 +354,69 @@ Fossil|Preserved evidence of ancient life
 Bamboo Forest|A woodland dominated by a fast-growing plant
 Tidal Wave|A powerful movement of ocean water linked to changing tides
 Sandstorm|A weather event involving airborne dust and sand
-Aurora|A colourful light display in the upper atmosphere`
+Aurora|A colourful light display in the upper atmosphere`,
+  Transportation: `
+Airplane|Used for travelling long distances through the sky.
+Helicopter|Can hover in one place and is often used for rescue missions.
+Bicycle|A two-wheeled vehicle powered by human effort.
+Motorcycle|A motor-powered two-wheeler commonly used on roads.
+Scooter|A compact personal vehicle popular for short journeys.
+Bus|Carries many passengers along regular routes.
+Taxi|A vehicle hired to take passengers to their destination.
+Train|Travels along fixed metal tracks between stations.
+Subway|An urban transport system that often travels underground.
+Tram|A passenger vehicle that usually runs on tracks along city streets.
+Ship|A large vessel designed for travelling across oceans.
+Boat|A watercraft commonly used on rivers and lakes.
+Ferry|Transports passengers and sometimes vehicles across water.
+Yacht|A recreational vessel associated with luxury and leisure.
+Submarine|Designed to travel beneath the ocean's surface.
+Hot Air Balloon|Floats through the atmosphere using heated air.
+Rocket|Used to carry spacecraft beyond Earth's atmosphere.
+Spaceship|Designed for journeys beyond our planet.
+Ambulance|Specially equipped to transport people needing urgent medical care.
+Fire Engine|Carries emergency equipment to help firefighters reach incidents.
+Police Car|Used by law enforcement officers while on duty.
+Truck|Often transports heavy goods and large loads.
+Tractor|Commonly used on farms for pulling equipment.
+Bulldozer|A powerful machine used to move earth and clear land.
+Forklift|Used in warehouses to lift and move heavy pallets.
+Skateboard|A small board with wheels used for riding and tricks.
+Roller Skates|Worn on the feet and used for rolling across smooth surfaces.
+Cable Car|Carries passengers suspended from cables.
+Rickshaw|A small passenger vehicle commonly seen in busy streets.
+Monorail|A train system that travels along a single supporting rail.`,
+  'Random Mix': `
+Sunflower|A tall flowering plant whose large yellow head follows the sunlight.
+Snowman|A figure made by stacking snow into a human-like shape.
+Bookshelf|Furniture designed to store and display books.
+Butterfly|A colourful flying insect with large patterned wings.
+Toothbrush|An everyday item used for cleaning teeth.
+Starfish|A marine animal commonly recognised by its star-shaped body.
+Lighthouse|A coastal structure that guides ships using a powerful light.
+Raincoat|Clothing designed to keep someone dry during wet weather.
+Firefighter|A person trained to respond to fires and emergencies.
+Basketball|A sport played by shooting a ball through an elevated hoop.
+Waterfall|Water flowing over a steep natural edge.
+Moonlight|Natural light that comes from the Moon at night.
+Dragonfly|A flying insect with a long body and transparent wings.
+Skateboard|A small wheeled board used for riding and tricks.
+Mailbox|A container where letters and deliveries are placed.
+Cupcake|A small individual cake usually topped with icing.
+Airport|A place where aircraft take off, land and carry passengers.
+Bedroom|A private room mainly used for sleeping.
+Keychain|A small accessory used to hold and organise keys.
+Sunglasses|Eyewear designed to protect the eyes from bright sunlight.
+Earthquake|A natural event involving sudden movement of the ground.
+Hairbrush|A personal grooming tool used to arrange and smooth hair.
+Football|A team sport played by moving a ball towards a goal.
+Handshake|A greeting made by briefly holding another person's hand.
+Jellyfish|A soft-bodied sea creature with trailing tentacles.
+Newspaper|A printed publication containing news and current events.
+Pineapple|A tropical fruit with a rough outer surface and sweet interior.
+Doorbell|A device that makes a sound when someone visits a home.
+Snowflake|A tiny ice crystal that forms in freezing clouds.
+Wristwatch|A small timekeeping device worn around the wrist.`
 };
 const normalizeWordKey = word => String(word).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 const CURATED_HINTS = Object.fromEntries(Object.entries(CURATED_HINT_DATA).map(([category, data]) => {
