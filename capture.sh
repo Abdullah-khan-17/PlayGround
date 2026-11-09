@@ -10,7 +10,6 @@ if [[ "$CAPTURE_DIR" != /* ]]; then
   echo 'CAPTURE_DIR must be an absolute path.' >&2
   exit 1
 fi
-
 /usr/bin/time -p test -f "$RUNTIME_DIR/scripts/default-capture.mjs"
 /usr/bin/time -p test -f "$HOME/.local/share/omgithub-playwright/linux.json"
 /usr/bin/time -p test -f "$HOME/.local/share/omgithub-playwright/display"
@@ -23,8 +22,7 @@ case "$CAPTURE_DIR/" in
     ;;
 esac
 
-# The runtime capture implementation owns and closes its Chromium instance,
-# distinguishes temporary navigation/browser errors, and writes the required filenames.
+# The capture runner owns and closes its browser; transient navigation/browser failures exit 75.
 /usr/bin/time -p env \
   CAPTURE_AUTO_START=false \
   CAPTURE_STRICT=1 \
